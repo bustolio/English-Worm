@@ -24,10 +24,6 @@ In this simulation, the attacker follows a realistic kill-chain to compromise a 
 
 ## 🚀 How to Play
 
-> **Before you start:** A SysAdmin must first create a room via the Admin Panel (`/admin.html`, passphrase: `cyberadmin`). Once a room exists, players can join from the Lobby.
-
----
-
 ### 🏠 Lobby — `index.html`
 
 The Lobby is the starting point for all players.
