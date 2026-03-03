@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2 Overwatch – Admin Panel</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="admin-mode">
+    <!-- Admin Login Overlay -->
+    <div id="admin-login" class="visible">
+        <div class="login-box">
+            <h2>SYSADMIN AUTHENTICATION</h2>
+            <p>Access restricted to network administrators.</p>
+            <input type="password" id="admin-pwd" placeholder="Enter security passphrase" autofocus>
+            <button id="btn-login">AUTHENTICATE</button>
+            <p id="login-error"></p>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="admin-dashboard" style="display: none;">
+        <div class="admin-layout">
+
+            <header>
+                <div>
+                    <h1>NET-WORM :: GLOBAL MONITOR</h1>
+                    <p>Global Real-Time Node Monitoring</p>
+                </div>
+                <span id="last-updated">Last refresh: —</span>
+            </header>
+
+            <table class="monitor-table">
+                <thead>
+                    <tr>
+                        <th>ROOM ID</th>
+                        <th>LAST COMMAND</th>
+                        <th>MASTER</th>
+                        <th>SPECTATORS</th>
+                        <th>VICTIMS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="session-list">
+                    <tr>
+                        <td colspan="6" style="text-align:center; opacity:0.4; padding:30px;">
+                            SCANNING NETWORK...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="danger-zone">
+                <h3>ROOM MANAGEMENT</h3>
+                <p style="margin-bottom: 20px;">Create new simulation environments or purge existing ones.</p>
+
+                <div class="create-room-box">
+                    <input type="text" id="new-room-id" placeholder="Enter new Room ID (e.g., TEST-01)"
+                        autocomplete="off">
+                    <button id="btn-create-room">CREATE ROOM</button>
+                </div>
+
+                <button id="btn-purge-all" class="danger-btn" style="margin-top: 20px;">🔥 PURGE ALL ROOMS &
+                    SESSIONS</button>
+            </div>
+
+            <div id="global-settings"
+                style="margin-top: 40px; padding: 20px; background: rgba(255,0,0,0.05); border: 1px solid var(--red); border-radius: 4px;">
+                <h3 style="color: var(--red); margin-bottom: 10px;">GLOBAL OPERATIONS DIRECTIVE</h3>
+                <p style="margin-bottom: 20px;">Control access and connections across the entire simulation network.</p>
+
+                <div style="margin-bottom: 20px;">
+                    <button id="btn-force-disconnect-all" class="danger-btn">⚡ DISCONNECT ALL USERS</button>
+                    <p style="font-size: 0.8em; margin-top: 5px; opacity: 0.7;">Forces all active connections to drop
+                        immediately. They will not be able to interact until they refresh.</p>
+                </div>
+
+                <div style="border-top: 1px dashed var(--red); padding-top: 20px;">
+                    <h4 style="color: var(--amber); margin-bottom: 10px;">SITE MAINTENANCE LOCKDOWN</h4>
+                    <p style="font-size: 0.8em; margin-bottom: 10px; opacity: 0.8;">Block all new and existing users
+                        from accessing the simulation unless they have the bypass password.</p>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="password" id="lockdown-pwd" placeholder="Set Bypass Password"
+                            style="background: var(--darker); border: 1px solid var(--red); color: white; padding: 8px; border-radius: 4px;">
+                        <button id="btn-toggle-lockdown"
+                            style="background: var(--darker); color: var(--red); border: 1px solid var(--red); padding: 8px 16px; cursor: pointer;">ENABLE
+                            LOCKDOWN</button>
+                        <span id="lockdown-status"
+                            style="margin-left: 10px; font-weight: bold; color: var(--subtle);">STATUS: INACTIVE</span>
+                    </div>
+                </div>
+            </div>
+
+            <a class="back-link" href="index.html">← Return to Lobby</a>
+
+        </div>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>

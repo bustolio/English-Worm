@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="SOC Dashboard — Monitor your network in real-time and defend against the incoming cyber attack simulation.">
+    <title>SOC Dashboard | Victim</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/victim.css">
+</head>
+
+<body class="victim-mode">
+
+    <!-- Top Header -->
+    <div id="dashboard-header">
+        <h1>🛡 SECURITY OPERATIONS CENTER</h1>
+        <div id="threat-badge">THREAT: LOW</div>
+        <div id="role-badge">DEFENDER</div>
+    </div>
+
+    <!-- Network Map -->
+    <div id="network-map-container"></div>
+
+    <!-- System Log Console -->
+    <div id="victim-console">
+        <div class="console-header">
+            <span>SYSTEM LOGS</span>
+            <span id="console-time"></span>
+        </div>
+        <div id="victim-output"></div>
+    </div>
+
+    <!-- Ghost Interception Widget -->
+    <div id="interception-overlay">
+        <div class="intercept-header">⚡ REMOTE TERMINAL INTERCEPTED</div>
+        <div id="intercept-text">LISTENING...</div>
+    </div>
+
+    <!-- Ransom Overlay -->
+    <div id="ransom-overlay" style="display:none;">
+        <div class="ransom-box">
+            <h2>⚠ YOUR FILES ARE ENCRYPTED ⚠</h2>
+            <p>All files on this network have been encrypted with <strong>RSA-2048 + AES-256</strong>.</p>
+            <p>To restore your files, pay the ransom:</p>
+            <span class="btc">💰 5.00 BTC</span>
+            <p style="font-size:0.8rem; color:#8b949e;">Send to wallet: 1A2B3C4D5E6F7G8H9I0J... within 72 hours.</p>
+            <button id="pay-ransom-btn">💳 PAY RANSOM</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/victim.js"></script>
+    <script>
+        // Live clock in the console header
+        function updateClock() {
+            document.getElementById('console-time').textContent = new Date().toLocaleTimeString();
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+
+</html>

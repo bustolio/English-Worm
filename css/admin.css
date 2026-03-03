@@ -1,0 +1,353 @@
+/* ============================================================
+   ADMIN – C2 COMMAND OVERWATCH
+   ============================================================ */
+
+.admin-layout {
+    padding: 36px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+header h1 {
+    color: #fff;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+}
+
+header p {
+    color: var(--subtle);
+    font-size: 0.78rem;
+    margin-top: 4px;
+}
+
+#last-updated {
+    font-size: 0.72rem;
+    color: var(--subtle);
+    opacity: 0.6;
+}
+
+/* ── Monitor Table ────────────────────────────────────── */
+.monitor-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.monitor-table th {
+    background: #0d1117;
+    color: var(--subtle);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.monitor-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #1a1f26;
+    color: var(--text);
+    font-size: 0.88rem;
+    vertical-align: middle;
+}
+
+.monitor-table tr:last-child td {
+    border-bottom: none;
+}
+
+.monitor-table tbody tr:hover {
+    background: rgba(88, 166, 255, 0.04);
+}
+
+/* Status indicators */
+.status-active {
+    color: var(--green);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-active::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px var(--green);
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.4);
+        opacity: 0.6;
+    }
+}
+
+.status-empty {
+    color: var(--red);
+    opacity: 0.5;
+    font-size: 0.8rem;
+}
+
+.cmd-text {
+    font-family: var(--font);
+    background: #000;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: var(--blue);
+    font-size: 0.82rem;
+    word-break: break-all;
+}
+
+.room-id-cell {
+    color: var(--blue);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* ── Admin Login Overlay ────────────────────────────────── */
+#admin-login {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #050505;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+#admin-login.visible {
+    display: flex;
+}
+
+.login-box {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 50px;
+    text-align: center;
+    max-width: 420px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.login-box h2 {
+    color: #fff;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.login-box p {
+    color: var(--subtle);
+    font-size: 0.8rem;
+    margin-bottom: 24px;
+}
+
+.login-box input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border);
+    padding: 12px;
+    color: #fff;
+    font-family: var(--font);
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+.login-box button {
+    width: 100%;
+    background: rgba(88, 166, 255, 0.1);
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    padding: 12px;
+    font-family: var(--font);
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.login-box button:hover {
+    background: var(--blue);
+    color: #000;
+}
+
+#login-error {
+    color: var(--red);
+    font-size: 0.75rem;
+    min-height: 1rem;
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+
+
+/* ── Danger Zone & Room Management ──────────────────────── */
+#danger-zone {
+    margin-top: 50px;
+    padding: 28px 36px;
+    border: 1px solid rgba(255, 51, 51, 0.25);
+    background: rgba(255, 51, 51, 0.02);
+    text-align: center;
+    border-radius: 12px;
+    animation: danger-border-pulse 3s infinite;
+}
+
+@keyframes danger-border-pulse {
+
+    0%,
+    100% {
+        border-color: rgba(255, 51, 51, 0.25);
+    }
+
+    50% {
+        border-color: rgba(255, 51, 51, 0.6);
+        box-shadow: 0 0 20px rgba(255, 51, 51, 0.1);
+    }
+}
+
+#danger-zone h3 {
+    color: var(--red);
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+}
+
+.create-room-box {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.create-room-box input {
+    background: #000;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 10px 16px;
+    font-family: var(--font);
+    border-radius: 6px;
+    width: 280px;
+}
+
+.create-room-box input:focus {
+    outline: none;
+    border-color: var(--green);
+}
+
+#btn-create-room {
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 0 20px;
+    font-family: var(--font);
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+#btn-create-room:hover {
+    background: var(--green);
+    color: #000;
+}
+
+.danger-btn {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 10px 24px;
+    font-family: var(--font);
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.danger-btn:hover {
+    background: var(--red);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 51, 51, 0.4);
+}
+
+/* Table inline action buttons */
+.action-btn {
+    background: transparent;
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    padding: 6px 12px;
+    font-family: var(--font);
+    font-size: 0.7rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 8px;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: var(--amber);
+    color: #000;
+}
+
+.action-btn.delete {
+    color: var(--red);
+    border-color: var(--red);
+}
+
+.action-btn.delete:hover {
+    background: var(--red);
+    color: #fff;
+}
+
+/* ── Back link ────────────────────────────────────────── */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.back-link:hover {
+    opacity: 1;
+}

@@ -1,0 +1,351 @@
+/* ============================================================
+   ATTACKER TERMINAL
+   ============================================================ */
+.attacker-mode {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    gap: 14px;
+}
+
+/* Status bar */
+#status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 0.78rem;
+    color: var(--subtle);
+    flex-shrink: 0;
+}
+
+/* Role badge */
+#role-badge {
+    font-size: 0.72rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid;
+}
+
+.role-pending {
+    color: var(--subtle);
+    border-color: var(--subtle);
+    background: transparent;
+    opacity: 0.5;
+}
+
+.role-master {
+    color: var(--green);
+    border-color: var(--green);
+    background: rgba(0, 255, 65, 0.08);
+}
+
+.role-spectator {
+    color: var(--amber);
+    border-color: var(--amber);
+    background: rgba(245, 158, 11, 0.08);
+}
+
+/* Spectator banner */
+#spectator-banner {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: rgba(245, 158, 11, 0.07);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 0.82rem;
+    color: var(--amber);
+    flex-shrink: 0;
+    animation: banner-slide-in 0.4s ease-out;
+}
+
+#spectator-banner.visible {
+    display: flex;
+}
+
+@keyframes banner-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.spec-sub {
+    color: var(--subtle);
+    font-size: 0.72rem;
+}
+
+
+
+.status-room {
+    color: var(--blue);
+}
+
+#conn-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#conn-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: blink-conn 2s infinite;
+}
+
+#conn-dot.dead {
+    background: var(--red);
+    box-shadow: 0 0 8px var(--red);
+    animation: none;
+}
+
+@keyframes blink-conn {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* Terminal window */
+#terminal-fullscreen {
+    flex: 1;
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0, 255, 65, 0.04), inset 0 0 60px rgba(0, 0, 0, 0.5);
+}
+
+/* CRT vignette */
+#terminal-fullscreen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.7) 100%),
+        linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+    background-size: 100% 100%, 100% 3px, 4px 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#output {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 0.97rem;
+    line-height: 1.55;
+    color: var(--green);
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-family: var(--font);
+    padding-bottom: 4px;
+}
+
+/* Output Classes */
+.user-cmd {
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.info {
+    color: var(--subtle);
+}
+
+.success {
+    color: var(--green);
+    text-shadow: 0 0 6px rgba(0, 255, 65, 0.5);
+}
+
+.error {
+    color: var(--red);
+}
+
+.log-alert {
+    color: var(--yellow);
+}
+
+.warn {
+    color: var(--amber);
+}
+
+/* Input line */
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    border-top: 1px solid #1a1f25;
+    padding-top: 12px;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.prompt {
+    color: var(--blue);
+    white-space: nowrap;
+    user-select: none;
+}
+
+input#cmd-input {
+    background: transparent;
+    border: none;
+    color: var(--green);
+    font-family: var(--font);
+    font-size: 0.97rem;
+    flex: 1;
+    outline: none;
+    caret-color: var(--green);
+}
+
+/* Connection severed state */
+body.killed #terminal-fullscreen {
+    filter: grayscale(100%) brightness(0.4);
+    pointer-events: none;
+}
+
+body.killed #status-bar {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+/* Killed Overlay */
+#killed-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+#killed-overlay.visible {
+    display: flex;
+}
+
+.killed-box {
+    background: #0a0000;
+    border: 1px solid var(--red);
+    border-radius: 12px;
+    padding: 40px 50px;
+    text-align: center;
+    max-width: 460px;
+    box-shadow: 0 0 60px rgba(255, 51, 51, 0.3);
+    animation: killed-in 0.3s ease-out;
+}
+
+@keyframes killed-in {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.killed-title {
+    font-size: 1.4rem;
+    color: var(--red);
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 20px var(--red);
+    animation: text-flicker 2s infinite;
+}
+
+@keyframes text-flicker {
+
+    0%,
+    96%,
+    100% {
+        opacity: 1;
+    }
+
+    97% {
+        opacity: 0.1;
+    }
+
+    98% {
+        opacity: 1;
+    }
+
+    99% {
+        opacity: 0.3;
+    }
+}
+
+.killed-msg {
+    color: var(--subtle);
+    font-size: 0.82rem;
+    line-height: 1.8;
+    margin-bottom: 28px;
+}
+
+.killed-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.killed-actions button {
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-family: var(--font);
+    font-size: 0.82rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#btn-reconnect {
+    background: transparent;
+    color: var(--green);
+    border: 1px solid var(--green);
+}
+
+#btn-reconnect:hover {
+    background: var(--green);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+}
+
+#btn-full-reset {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid var(--red);
+}
+
+#btn-full-reset:hover {
+    background: var(--red);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 51, 51, 0.4);
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="NET-WORM Simulator — An educational cyber attack simulation. Join as an Attacker or Defender.">
+    <title>NET-WORM SIMULATOR — Lobby</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/lobby.css">
+</head>
+
+<body>
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="lobby-container">
+        <div class="room-input-box">
+            <h1 class="glitch-text" data-text="NET-WORM SIMULATOR">NET-WORM SIMULATOR</h1>
+            <p class="lobby-subtitle">EDUCATIONAL CYBER ATTACK SIMULATION</p>
+
+            <div class="lobby-card">
+                <div id="room-list" class="room-list-container">
+                    <div class="room-list-loading">Scanning for active simulations...</div>
+                </div>
+
+                <div class="instructions">
+                    <strong>HOW TO PLAY:</strong>
+                    <ol>
+                        <li>Select an active simulation room above.</li>
+                        <li>Join as an <strong>Attacker</strong> to launch the assault.</li>
+                        <li>Open another tab and join as a <strong>Victim</strong> to monitor the SOC dashboard.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="lobby-footer">
+                <a href="admin.html">π ADMIN PANEL</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Selection Modal -->
+    <div id="role-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>SELECT YOUR DEPLOYMENT</h3>
+            <p>Target Environment: <strong id="modal-room-name" style="color:var(--green)"></strong></p>
+            <div class="modal-actions">
+                <button id="btn-join-attacker" class="role-btn attacker-btn">
+                    <span class="icon">💻</span>
+                    ATTACKER TERMINAL
+                </button>
+                <button id="btn-join-victim" class="role-btn victim-btn">
+                    <span class="icon">🛡</span>
+                    VICTIM DASHBOARD
+                </button>
+            </div>
+            <button id="btn-modal-cancel" class="cancel-link">← Cancel</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/lobby.js"></script>
+    <script>
+        // Matrix Rain Background
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ﾊﾋﾌﾍﾎ@#$%&あいうえお';
+        let cols, drops;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            cols = Math.floor(canvas.width / 18);
+            drops = Array(cols).fill(1);
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(8, 12, 16, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff41';
+            ctx.font = '14px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                ctx.globalAlpha = Math.random() * 0.6 + 0.2;
+                ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * 18, drops[i] * 18);
+                if (drops[i] * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        init();
+        window.addEventListener('resize', init);
+        setInterval(draw, 50);
+
+    </script>
+
+</body>
+
+</html>

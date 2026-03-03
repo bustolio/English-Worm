@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Attacker C2 Terminal — issue commands, exploit vulnerabilities, and spread the worm across the simulated network.">
+    <title>C2 Terminal | Attacker</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/attacker.css">
+</head>
+
+<body class="attacker-mode">
+
+    <div id="status-bar">
+        <span>NET-WORM C2 TERMINAL&nbsp;·&nbsp;v2.7.0</span>
+        <div id="role-indicator">
+            <span id="role-badge" class="role-pending">⏳ CONNECTING...</span>
+        </div>
+        <span class="status-room">ROOM: <span id="room-label">—</span></span>
+        <div id="conn-indicator">
+            <div id="conn-dot"></div>
+            <span id="conn-label">LINK ACTIVE</span>
+        </div>
+    </div>
+
+    <!-- Spectator banner -->
+    <div id="spectator-banner">
+        <span>👁 SPECTATOR MODE</span>
+        <span class="spec-sub">You are watching the Master's terminal — input is disabled.</span>
+    </div>
+
+    <div id="terminal-fullscreen">
+        <div id="output"></div>
+        <div class="input-line">
+            <span class="prompt">root@kali:~#</span>
+            <input type="text" id="cmd-input" autocomplete="off" autofocus spellcheck="false">
+        </div>
+    </div>
+
+    <!-- Killed / Disconnected Overlay -->
+    <div id="killed-overlay">
+        <div class="killed-box">
+            <div class="killed-title">⛔ CONNECTION TERMINATED</div>
+            <p class="killed-msg">IDS trace complete — your session has been severed.<br>You've been detected and kicked
+                from the network.</p>
+            <div class="killed-actions">
+                <button id="btn-reconnect">🔄 RECONNECT</button>
+                <button id="btn-full-reset">💣 RESET SIMULATION</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/attacker.js"></script>
+
+</body>
+
+</html>
